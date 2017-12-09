@@ -21,6 +21,22 @@ end
 
 # Let's do this ...
 
+## USER
+
+u1 = User.create!({
+  first_name: 'John',
+  last_name: 'Doe',
+  email: 'john@doe.com',
+  password: '1234'
+})
+
+u2 = User.create!({
+  first_name: 'Jane',
+  last_name: 'Doe',
+  email: 'jane@doe.com',
+  password: '1234'
+})
+
 ## CATEGORIES
 
 puts "Finding or Creating Categories ..."
@@ -29,13 +45,13 @@ cat1 = Category.find_or_create_by! name: 'Apparel'
 cat2 = Category.find_or_create_by! name: 'Electronics'
 cat3 = Category.find_or_create_by! name: 'Furniture'
 
-## PRODUCTS
+## PRODUCTS & REVIEWS
 
 puts "Re-creating Products ..."
 
 Product.destroy_all
 
-cat1.products.create!({
+p1 = cat1.products.create!({
   name:  'Men\'s Classy shirt',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel1.jpg'),
@@ -43,12 +59,33 @@ cat1.products.create!({
   price: 64.99
 })
 
-cat1.products.create!({
+Review.create!({
+  product_id: p1.id,
+  user_id: u1.id,
+  description: 'awesome shirt!',
+  rating: 9
+})
+
+Review.create!({
+  product_id: p1.id,
+  user_id: u2.id,
+  description: 'mediocre quality for the price',
+  rating: 6
+})
+
+p2 = cat1.products.create!({
   name:  'Women\'s Zebra pants',
   description: Faker::Hipster.paragraph(4),
   image: open_asset('apparel2.jpg'),
   quantity: 18,
   price: 124.99
+})
+
+Review.create!({
+  product_id: p2.id,
+  user_id: u1.id,
+  description: 'good quality & cheap!',
+  rating: 10
 })
 
 cat1.products.create!({
