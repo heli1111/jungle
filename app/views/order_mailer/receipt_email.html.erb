@@ -1,0 +1,12 @@
+<h1>Thank you for your order <%= @user.email %></h1>
+<hr>
+<% @order.line_items.each do |item| %>
+  <p>
+    <%=item.quantity %> * <%= item.product.name %> (<%= item.item_price %>) = <%= item.total_price %>
+  </p>
+<hr>
+<% end %>
+<p>
+  Total: $<%= @order.total_cents/100.0 %>
+</p>
+<hr>

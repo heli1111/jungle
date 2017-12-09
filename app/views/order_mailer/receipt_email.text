@@ -1,0 +1,7 @@
+Thank you for your order <%= @user.email %>
+============================================
+<% @order.line_items.each do |item| %>
+<%=item.quantity %> * <%= item.product.name %> (<%= item.item_price %>) = <%= item.total_price %>
+<% end %>
+--------------------------------------------
+Total: $<%= @order.total_cents/100.0 %>
